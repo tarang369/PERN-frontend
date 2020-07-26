@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { toast } from "react-toastify";
 
 const InputTodo = () => {
   const [description, setDescription] = useState("");
@@ -8,10 +9,13 @@ const InputTodo = () => {
       const body = { description };
       const response = await fetch("http://localhost:5000/dashboard/todos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
         body: JSON.stringify(body),
       });
-      window.location = "/";
+      toast.success("Added Successfully");
       console.log(response);
     } catch (err) {
       console.error(err);

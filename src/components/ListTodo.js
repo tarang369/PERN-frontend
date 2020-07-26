@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EditTodo from "./EditTodo";
-
+import { toast } from "react-toastify";
 const ListTodo = () => {
   const [todos, setTodos] = useState([]);
   const getTodos = async () => {
@@ -17,12 +17,15 @@ const ListTodo = () => {
   };
   const deleteTodo = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/dashboard/todo/${id}`, {
+      await fetch(`http://localhost:5000/dashboard/todo/${id}`, {
         method: "DELETE",
+        headers: { token: localStorage.token },
       });
-      console.log(res);
       setTodos(todos.filter((todo) => todo.todo_id !== id));
-    } catch (err) {}
+      toast.success("Deleted Successfully");
+    } catch (err) {
+      console.error(err.message);
+    }
   };
   useEffect(() => {
     getTodos();

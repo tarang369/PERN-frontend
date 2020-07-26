@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Input from "../components/InputTodo";
 import List from "../components/ListTodo";
+import { toast } from "react-toastify";
+
 const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
   async function getName() {
     try {
-      const respose = await fetch("http://localhost:5000/dashboard/", {
+      const respose = await fetch("http://localhost:5000/dashboard", {
         method: "GET",
         headers: { token: localStorage.token },
       });
@@ -23,6 +25,7 @@ const Dashboard = ({ setAuth }) => {
     e.preventDefault();
     localStorage.removeItem("token");
     setAuth(false);
+    toast.warn("Logged Out Successfully");
   };
   return (
     <>

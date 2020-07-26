@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const EditTodo = ({ todo }) => {
   const [description, setDescription] = useState(todo.description);
@@ -7,13 +8,17 @@ const EditTodo = ({ todo }) => {
       const body = { description };
       await fetch(`http://localhost:5000/dashboard/todo/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
         body: JSON.stringify(body),
       });
-      window.location = "/";
+      toast.success("Updated in Successfully");
     } catch (err) {
       console.error(err.message);
     }
+    window.location = "/";
   };
   return (
     <>
