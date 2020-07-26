@@ -5,9 +5,11 @@ const ListTodo = () => {
   const [todos, setTodos] = useState([]);
   const getTodos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/todos");
+      const response = await fetch("http://localhost:5000/dashboard/todos", {
+        method: "GET",
+        headers: { token: localStorage.token },
+      });
       const jsonData = await response.json();
-
       setTodos(jsonData);
     } catch (err) {
       console.error(err.message);
@@ -15,7 +17,7 @@ const ListTodo = () => {
   };
   const deleteTodo = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/todo/${id}`, {
+      const res = await fetch(`http://localhost:5000/dashboard/todo/${id}`, {
         method: "DELETE",
       });
       console.log(res);

@@ -6,7 +6,7 @@ const InputTodo = () => {
     e.preventDefault();
     try {
       const body = { description };
-      const response = await fetch("http://localhost:5000/todos", {
+      const response = await fetch("http://localhost:5000/dashboard/todos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -19,12 +19,13 @@ const InputTodo = () => {
   };
   return (
     <Fragment>
-      <h1 className='text-center my-5'>Input Todo</h1>
+      <h1 className='text-center my-5'>Todos</h1>
       <form className='d-flex' onSubmit={onSubmitForm}>
         <input
           type='text'
           className='form-control'
           value={description}
+          placeholder='Add a Todo'
           onChange={(e) => setDescription(e.target.value)}
         />
         <button className='btn btn-success'>+</button>

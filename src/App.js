@@ -1,15 +1,75 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import "./App.css";
-import Input from "./components/InputTodo";
-import List from "./components/ListTodo";
-
+import Dashboard from "./pages/Dashboard";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 function App() {
+  const [isAuthenticated, setisAuthenticated] = useState(false);
+  const setAuth = (Boolean) => {
+    setisAuthenticated(Boolean);
+  };
+  const isAuth = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/auth/verify", {
+        method: "GET",
+        headers: { token: localStorage.token },
+      });
+      const parseRes = await response.json();
+      parseRes ? setisAuthenticated(true) : setisAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  useEffect(() => {
+    isAuth();
+  }, []);
   return (
     <Fragment>
-      <div className='container'>
-        <Input />
-        <List />
-      </div>
+      <Router>
+        <div className='container'>
+          <Switch>
+            <Route
+              exact
+              path='/login'
+              render={(props) =>
+                !isAuthenticated ? (
+                  <Login {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Route
+              exact
+              path='/register'
+              render={(props) =>
+                !isAuthenticated ? (
+                  <Register {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Route
+              exact
+              path='/'
+              render={(props) =>
+                isAuthenticated ? (
+                  <Dashboard {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to='/login' />
+                )
+              }
+            />
+          </Switch>
+        </div>
+      </Router>
     </Fragment>
   );
 }
