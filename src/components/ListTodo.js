@@ -1,8 +1,34 @@
 import React, { useState, useEffect } from "react";
 import EditTodo from "./EditTodo";
 import { toast } from "react-toastify";
+import "./Todo.css";
+import InputTodo from "./InputTodo";
+import { AiOutlineSearch } from "react-icons/ai";
+import { MdDeleteForever } from "react-icons/md";
+
 const ListTodo = () => {
   const [todos, setTodos] = useState([]);
+  const [q, setQ] = useState("");
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `http://localhost:5000/dashboard/todo?q=${q}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.token,
+          },
+        }
+      );
+      const parseRes = await response.json();
+      setTodos(parseRes);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const getTodos = async () => {
     try {
       const response = await fetch("http://localhost:5000/dashboard/todos", {
@@ -32,6 +58,21 @@ const ListTodo = () => {
   }, []);
   return (
     <>
+      <div className='header'>
+        <InputTodo />
+        <form style={{ display: "flex" }} onSubmit={onSubmitForm}>
+          <input
+            type='text'
+            className='form-control mr-2'
+            value={q}
+            placeholder='Search Todo'
+            onChange={(e) => setQ(e.target.value)}
+          />
+          <button className='btn btn-primary'>
+            <AiOutlineSearch style={{ fontSize: "20px" }} />
+          </button>
+        </form>
+      </div>
       <table className='table mt-5'>
         <thead>
           <tr>
@@ -52,7 +93,7 @@ const ListTodo = () => {
                   className='btn btn-danger'
                   onClick={() => deleteTodo(todo.todo_id)}
                 >
-                  Delete
+                  <MdDeleteForever style={{ fontSize: "20px" }} />
                 </button>
               </td>
             </tr>

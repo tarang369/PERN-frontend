@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { toast } from "react-toastify";
+import "./Todo.css";
+import { MdAdd } from "react-icons/md";
 
 const InputTodo = () => {
   const [description, setDescription] = useState("");
@@ -23,16 +25,17 @@ const InputTodo = () => {
   };
   return (
     <Fragment>
-      <h1 className='text-center my-5'>Todos</h1>
-      <form className='d-flex' onSubmit={onSubmitForm}>
+      <form className='d-flex w-75 mr-2' onSubmit={onSubmitForm}>
         <input
           type='text'
-          className='form-control'
+          className='form-control mr-2'
           value={description}
           placeholder='Add a Todo'
           onChange={(e) => setDescription(e.target.value)}
         />
-        <button className='btn btn-success'>+</button>
+        <button className='btn btn-success'>
+          <MdAdd style={{ fontSize: "20px" }} />
+        </button>
       </form>
     </Fragment>
   );

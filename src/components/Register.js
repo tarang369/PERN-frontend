@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaFileSignature } from "react-icons/fa";
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -66,7 +67,10 @@ const Register = ({ setAuth }) => {
           value={password}
           onChange={(e) => onHandler(e)}
         />
-        <button className='btn btn-success btn-block'>Register</button>
+        <button className='btn btn-success btn-block'>
+          <span>Register </span>
+          <FaFileSignature />
+        </button>
       </form>
       <span className='text-center my-5'>
         Already Have an Account?

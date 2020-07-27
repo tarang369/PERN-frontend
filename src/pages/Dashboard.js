@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import Input from "../components/InputTodo";
 import List from "../components/ListTodo";
 import { toast } from "react-toastify";
-
+import { AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
 const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
   async function getName() {
@@ -32,14 +31,22 @@ const Dashboard = ({ setAuth }) => {
       <div className='top-bar'>
         <h1>DashBoard</h1>
         <div>
-          <h5>Welcome,{name}</h5>
-          <button className='btn btn-info' onClick={(e) => Logout(e)}>
-            LogOut..
+          <span className='user'>
+            <AiOutlineUser className='user-info' />
+            Welcome,
+            <h5>{name}</h5>
+          </span>
+          <button className='btn btn-secondary' onClick={(e) => Logout(e)}>
+            <span>
+              LOG
+              <AiOutlineLogout style={{ fontSize: "x-large" }} />
+              UT
+            </span>
           </button>
         </div>
       </div>
       <div className='container'>
-        <Input />
+        <h1 className='text-center my-5'>Todos</h1>
         <List />
       </div>
     </>

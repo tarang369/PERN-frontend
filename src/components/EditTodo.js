@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { AiFillEdit, AiFillSave } from "react-icons/ai";
+import { GiCancel } from "react-icons/gi";
 
 const EditTodo = ({ todo }) => {
   const [description, setDescription] = useState(todo.description);
@@ -28,7 +30,7 @@ const EditTodo = ({ todo }) => {
         data-toggle='modal'
         data-target={`#id${todo.todo_id}`}
       >
-        Edit
+        <AiFillEdit style={{ fontSize: "20px", color: "white" }} />
       </button>
       <div
         id={`id${todo.todo_id}`}
@@ -64,7 +66,8 @@ const EditTodo = ({ todo }) => {
                 data-dismiss='modal'
                 onClick={() => editText(todo.todo_id)}
               >
-                Save
+                <span>SAVE </span>
+                <AiFillSave />
               </button>
               <button
                 type='button'
@@ -72,7 +75,8 @@ const EditTodo = ({ todo }) => {
                 data-dismiss='modal'
                 onClick={(e) => setDescription(todo.description)}
               >
-                Cancel
+                <span>CANCEL </span>
+                <GiCancel />
               </button>
             </div>
           </div>
