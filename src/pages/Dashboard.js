@@ -5,21 +5,25 @@ import { toast } from "react-toastify";
 import { AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
 const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
-  async function getName() {
+  const [allTodos, setAllTodos] = useState([]);
+  const [todosChange, setTodosChange] = useState(false);
+  async function getData() {
     try {
-      const respose = await fetch("http://localhost:5000/dashboard", {
+      const respose = await fetch("http://localhost:5000/dashboard/", {
         method: "GET",
         headers: { token: localStorage.token },
       });
       const parseRes = await respose.json();
-      setName(parseRes.user_name);
+      setName(parseRes[0].user_name);
+      setAllTodos(parseRes);
     } catch (err) {
       console.error(err.message);
     }
   }
   useEffect(() => {
-    getName();
-  }, []);
+    getData();
+    setTodosChange(false);
+  }, [todosChange]);
   const Logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
@@ -33,8 +37,7 @@ const Dashboard = ({ setAuth }) => {
         <div>
           <span className='user'>
             <AiOutlineUser className='user-info' />
-            Welcome,
-            <h5>{name}</h5>
+            Welcome,{name}
           </span>
           <button className='btn btn-secondary' onClick={(e) => Logout(e)}>
             <span>
@@ -47,7 +50,7 @@ const Dashboard = ({ setAuth }) => {
       </div>
       <div className='container'>
         <h1 className='text-center my-5'>Todos</h1>
-        <List />
+        <List allTodos={allTodos} setTodosChange={setTodosChange} />
       </div>
     </>
   );
