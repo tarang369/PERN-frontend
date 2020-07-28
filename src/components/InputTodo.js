@@ -3,13 +3,13 @@ import { toast } from "react-toastify";
 import "./Todo.css";
 import { MdAdd } from "react-icons/md";
 
-const InputTodo = () => {
+const InputTodo = ({ setTodosChange }) => {
   const [description, setDescription] = useState("");
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
       const body = { description };
-      const response = await fetch("http://localhost:5000/dashboard/todos", {
+      await fetch("http://localhost:5000/dashboard/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -18,7 +18,8 @@ const InputTodo = () => {
         body: JSON.stringify(body),
       });
       toast.success("Added Successfully");
-      console.log(response);
+      setTodosChange(true);
+      setDescription("");
     } catch (err) {
       console.error(err);
     }

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { AiFillEdit, AiFillSave } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 
-const EditTodo = ({ todo }) => {
+const EditTodo = ({ todo, setTodosChange }) => {
   const [description, setDescription] = useState(todo.description);
   const editText = async (id) => {
     try {
@@ -17,10 +17,10 @@ const EditTodo = ({ todo }) => {
         body: JSON.stringify(body),
       });
       toast.success("Updated in Successfully");
+      setTodosChange(true);
     } catch (err) {
       console.error(err.message);
     }
-    window.location = "/";
   };
   return (
     <>

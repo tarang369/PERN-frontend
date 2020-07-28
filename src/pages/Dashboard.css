@@ -19,12 +19,12 @@
   display: flex;
   background: rgba(100, 50, 250, 0.7);
   border-radius: 10px;
-  min-width: 190px;
+  min-width: 150px;
   height: 40px;
   width: fit-content;
   padding: 8px;
   color: white;
-  justify-content: space-between;
+  justify-content: space-evenly;
   font-weight: 600;
 }
 .user > .user-info {
@@ -32,10 +32,4 @@
   color: black;
   font-size: x-large;
   border-radius: 50%;
-}
-
-.user > h5 {
-  color: black;
-  font-weight: 700;
-  text-transform: uppercase;
 }
